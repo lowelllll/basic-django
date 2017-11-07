@@ -1,0 +1,2 @@
+# basic-django
+django-homepage
