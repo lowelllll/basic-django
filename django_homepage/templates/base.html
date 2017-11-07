@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Lowell Homepage{% endblock %}</title>
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- static file을 사용하기 위해서는 커스텀태그파일 staticfiles 를 로딩해야함-->
+    <!--django_homepage/static/css/base.css-->
+    <!-- 모든 파일에 상속되는 스타일-->
+    <link rel="stylesheet" href="{% block extrastyle %}{% endblock %}">
+    <!--하위 페이지들의 링크스타일-->
+
+</head>
+<body>
+    <div id="wrap">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'blog:index' %}">Blog</a></li>
+                    <li><a href="{% url 'bookmark:list' %}">Bookmark</a></li>
+                    <li><a href="{% url 'blog:post_archive' %}">Archive</a></li>
+                    <li><a href="#">photo</a></li>
+                    <li><h1><a href="{% url 'Home' %}">Lowell</a></h1></li>
+                    <li><a href="#">Add</a>
+                        <ul class="sub">
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Bookmark</a></li>
+                            <li><a href="#">Photo</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Change</a>
+                         <ul class="sub">
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Bookmark</a></li>
+                            <li><a href="#">Photo</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'blog:search' %}">Search</a></li>
+                    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section>
+          <article>
+            {% block content%}{% endblock %}
+          </article>
+        </section>
+        <footer>
+            {% block footer %}{% endblock %}
+        </footer>
+    </div>
+</body>
+</html>

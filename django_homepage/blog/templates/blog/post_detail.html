@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+
+{% block title %} {{ object.title }} {% endblock %}
+{% block content %}
+  <h1>{{ object.title }}</h1>
+    <p class="other_posts">
+        {% if object.get_previous_by_modify_date %}
+        <a href="{{ object.get_previous_by_modify_date.get_absolute_url }}"> 이전글 |</a>
+        {% endif %}
+
+        {% if object.get_next_by_modify_date %}
+        <a href="{{ object.get_next_by_modify_date.get_absolute_url }}">다음글</a>
+        {% endif %}
+    </p>
+
+    <p class="date"> {{ object.modify_date|date:"j F y" }}</p>
+    <br>
+    <div class="body">
+        {{ object.content|linebreaks }}
+        <!--linebreaks 줄바꿈 인식-->
+    </div>
+    <div>
+        <b>TAGS:</b>
+        {% load tagging_tags %}
+        <!-- 커스텀 태그 로드 -->
+        {% tags_for_object object as tags %}
+        {% for tag in tags %}
+        <a href="{% url 'blog:tagged_object_list' tag.name %}">{{ tag.name }}</a>
+        {% endfor %}
+        <a href="{% url 'blog:tag_cloud' %}">[ Tag Cloud ]</a>
+    </div>
+<br>
+    <div>
+        {% load disqus_tags %}
+        {% disqus_show_comments %}
+    </div>
+{% endblock %}
