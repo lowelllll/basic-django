@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Album_list{% endblock %}
+
+{% load staticfiles %}-->
+{% block extrastyle %}{% static 'css/photo.css'%}{% endblock %}
+
+{% block content %}
+    <h1>Album list</h1>
+    {% for item in object_list %} <!--앨범 리스트를 출력함-->
+    <div class="clear_float">
+        <h2 style="display:inline"><a href="{% url 'photo:album_detail' item.id %}">{{ item.name }}</a></h2>
+        {{ item.description }}
+    </div>
+    <hr>
+    <div class="album-ist"><!--사진 리스트를 출력함-->
+        {% for photo in item.photo_set.all|slice:":5" %} <!-- 특정 앨범 객체에 들어있는 사진 객체 리스트를 뽑음 5개만 -->
+            <div class="album-list-photo">
+                <a href="{{ photo.get_absolute_url }}">
+                    <img src="{{ photo.image.thumb_url }}" alt="{{ photo.title }}" class="thumbnail"> <!--썸네일 thumb_url , 원본 url-->
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.name }}{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static 'css/photo.css' %}{% endblock %}
+
+{% block content %}
+    <h2 style="display:inline">{{ object.name }}</h2>
+    {{ object.description }}
+    <hr>
+
+    <div class="ablum-detail">
+        {% for photo in object.photo_set.all %}
+        <div class="album-detail-photo">
+            <a href="{{ photo.get_absolute_url }}">
+                <img src="{{ photo.image.thumb_url }}" alt="{{ photo.title }}" class="thumbnail" >
+            </a>
+            <li>{{ photo.title }}</li>
+            <li>{{ photo.upload_date|date:"Y-m-d" }}</li>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
